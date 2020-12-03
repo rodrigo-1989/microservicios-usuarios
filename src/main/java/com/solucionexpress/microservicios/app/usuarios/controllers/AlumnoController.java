@@ -36,7 +36,7 @@ public class AlumnoController {
         return ResponseEntity.status(HttpStatus.CREATED).body( alumno );
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<?> editar(@RequestBody Alumno alumno,@PathVariable Long id){
         Optional<Alumno> o = service.findById(id);
         if( o.isEmpty()){

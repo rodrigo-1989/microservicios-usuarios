@@ -31,7 +31,7 @@ public class AlumnoServiceImpl implements AlumnoService{
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public void deleteById(Long id) {
         repository.deleteById(id);
     }
