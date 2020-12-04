@@ -1,19 +1,15 @@
 package com.solucionexpress.microservicios.app.usuarios.models.services;
 
-import com.solucionexpress.microservicios.app.usuarios.models.entity.Alumno;
-import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 
-public interface AlumnoService {
+import java.util.List;
 
-    public Iterable<Alumno> findAll();
+import com.solucionexpress.microservicios.commons.alumnos.models.entity.Alumno;
+import com.solucionexpress.microservicios.commons.services.CommonService;
 
-    public Optional<Alumno> findById(Long id);
 
-    public Alumno save( Alumno alumno);
+public interface AlumnoService extends CommonService<Alumno>{
 
-    public void deleteById  (Long id);
+	public List<Alumno>findByNombreOrApellido(String term);
     
 }
