@@ -15,13 +15,19 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
 public class AlumnoController extends CommonController<Alumno, AlumnoService> {
 
+	
+	@GetMapping("/alumnos-por-curso")
+	public ResponseEntity<?> obtenerAlumnosPorCurso (@RequestParam List<Long> ids){
+		return ResponseEntity.ok(service.findAllById(ids));
+	}
     @GetMapping("/uploads/img/{id}")
-    public ResponseEntity<?>verFoto (@PathVariable Long id){
+    public ResponseEntity<?> verFoto (@PathVariable Long id){
         Optional<Alumno> o = service.findById(id);
         if (o.isEmpty() || o.get().getFoto() == null){
             return ResponseEntity.notFound().build();
@@ -32,7 +38,6 @@ public class AlumnoController extends CommonController<Alumno, AlumnoService> {
                 .contentType(MediaType.IMAGE_JPEG)
                 .body(imagen);
     }
-
     @PutMapping("/{id}")
     public ResponseEntity<?> editar(@Valid @RequestBody Alumno alumno, BindingResult result, @PathVariable Long id){
         if (result.hasErrors() ){
@@ -49,9 +54,8 @@ public class AlumnoController extends CommonController<Alumno, AlumnoService> {
 
         return ResponseEntity.status(HttpStatus.CREATED).body( service.save(alumnoDb) );
     }
-    
     @GetMapping("/filtrar/{term}")
-    public ResponseEntity <?>filtrar(@PathVariable String term){
+    public ResponseEntity<?> filtrar(@PathVariable String term){
     	return ResponseEntity.ok(service.findByNombreOrApellido(term));
     }
     @PostMapping("/crear-con-foto")
@@ -83,3 +87,4 @@ public class AlumnoController extends CommonController<Alumno, AlumnoService> {
         return ResponseEntity.status(HttpStatus.CREATED).body( service.save(alumnoDb) );
     }
 }
+
